@@ -16,6 +16,14 @@ router.get('/', function(req, res, next) {
   .catch(error => console.error(error));
 });
 
+router.get('/:id', function(req, res, next) {
+  usersCollection.find({ id: req.params.id}).toArray()
+  .then(results => {
+    res.send(results)
+  })
+  .catch(error => console.error(error));
+});
+
 router.post('/create', function(req, res, next){
   usersCollection.insertOne(req.body)
   .then(result => {
