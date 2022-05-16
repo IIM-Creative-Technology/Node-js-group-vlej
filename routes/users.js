@@ -8,7 +8,12 @@ const usersCollection =  db.collection("Users");
 /* GET users listing. */
 
 router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+  // Index
+  usersCollection.find().toArray()
+  .then(results => {
+    res.send(results)
+  })
+  .catch(error => console.error(error));
 });
 
 router.post('/create', function(req, res, next){
