@@ -11,7 +11,7 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
-router.post('/create', function(req,res,next){
+router.post('/create', function(req, res, next){
   usersCollection.insertOne(req.body)
   .then(result => {
     res.redirect('/')
