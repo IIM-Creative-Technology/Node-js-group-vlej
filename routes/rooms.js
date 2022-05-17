@@ -30,7 +30,7 @@ router.post('/', function(req, res, next){
   console.log(req.body);
   roomsCollection.insertOne(req.body)
   .then(result => {
-    res.redirect('/')
+    res.json({success:true})
   })
   .catch(error => console.error(error))
   
