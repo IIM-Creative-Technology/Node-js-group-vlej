@@ -1,15 +1,21 @@
+// IMPORTS
+
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
+const session = require("express-session");
+const MongoStore = require("connect-mongo")(session);
+const mongoose = require("mongoose");
+const passport = require("./passport/setup");
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var roomsRouter = require('./routes/rooms');
 const { LoggerLevel } = require('mongodb');
 const bodyParser = require('body-parser');
 
+// INITIALISATION
 var app = express();
 
 app.use(logger('dev'));
@@ -20,10 +26,26 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
+app.use(express.urlencoded({ extended: false }));
 
+// ROUTES
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/rooms', roomsRouter);
+
+// SESSION (auth)
+app.use(
+  session({
+      secret: "very secret this is",
+      resave: false,
+      saveUninitialized: true,
+      store: new MongoStore({ mongooseConnection: mongoose.connection })
+  })
+);
+
+// Passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
