@@ -12,6 +12,7 @@ const passport = require("./passport/setup");
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var roomsRouter = require('./routes/rooms');
+var messagesRouter = require('./routes/messages');
 const { LoggerLevel } = require('mongodb');
 const bodyParser = require('body-parser');
 
@@ -32,6 +33,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/rooms', roomsRouter);
+app.use('/messages', messagesRouter);
 
 // SESSION (auth)
 app.use(

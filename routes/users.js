@@ -53,10 +53,7 @@ router.delete('/delete/:id', function (req, res) {
   res.json({ success: id })
 });
 
-
-module.exports = router;
-
-// Update One user
+/* PUT update user */
 router.put('/:id', function(req, res, next){
   usersCollection.findOneAndUpdate(
     { id: req.params.id },
@@ -79,3 +76,5 @@ router.put('/:id', function(req, res, next){
     })
     .catch(error => console.error(error))
 })
+
+module.exports = router;
