@@ -1,9 +1,11 @@
 var express = require('express');
 var router = express.Router();
+var crypto = require('crypto');
 const passport = require("passport");
 const passportFonction = require("../passport/setup");
 const client = require('../database')
-const UserModel = require('../models/users-model')
+const User = require('../models/users-model');
+const { json } = require('express/lib/response');
 
 const db = client.db('nodejsDatabase');
 const usersCollection =  db.collection("Users");
@@ -26,24 +28,14 @@ router.get('/:id', function(req, res, next) {
   .catch(error => console.error(error));
 });
 
-/* POST create user */
-router.post('/create', function(req, res, next){
-  const user = new UserModel(req.body);
-  usersCollection.insertOne(user)
-  .then(result => {
-    res.json({ success: user.id })
-  })
-  .catch(error => console.error(error))
-});
-
-// REGISTER & LOGIN
-router.post("/register_login", (req, res, next) => {
-  passport.authenticate("local", function(err, user, info) {
-      if (err) {
-          return res.status(400).json({ errors: err });
-      }
-          passportFonction.register();
-  })(req, res, next);
+/* POST register/create new user with hashed password */
+router.post("/register", (req, res, next) => {
+  var salt = crypto.randomBytes(16);
+  crypto.pbkdf2(req.body.password, salt, 310000, 32, 'sha256', function(err, hashedPassword) {
+    const newUser = new User({ name: req.body.name, email: req.body.email, password: hashedPassword });
+    usersCollection.insertOne(newUser)
+  });
+  return res.json({success: `Le compte ${req.body.email} a bien été créé`})
 });
 
 /* DELETE user by id */
