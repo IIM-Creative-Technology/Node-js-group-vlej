@@ -17,7 +17,8 @@ router.get('/', function(req, res, next) {
 
 /* GET message by id */
 router.get('/:id', function(req, res, next) {
-  messagesCollection.find({ id: req.params.id}).toArray()
+  const id = parseInt(req.params.id)
+  messagesCollection.find({ id:id}).toArray()
   .then(results => {
     res.send(results)
   })
@@ -25,7 +26,7 @@ router.get('/:id', function(req, res, next) {
 });
 
 /* POST create message */
-router.post('/create', function(req, res, next){
+router.post('/', function(req, res, next){
   messagesCollection.insertOne(req.body)
   .then(result => {
     res.redirect('/')
@@ -34,11 +35,20 @@ router.post('/create', function(req, res, next){
 });
 
 /* DELETE message by id */
-router.delete('/delete/:id', function (req, res) {
-  var id = req.params.id;
+router.delete('/:id', function (req, res) {
+  const id = parseInt(req.params.id)
   messagesCollection.deleteOne({ id: id });
   res.json({ success: id })
 });
 
+//find messages by room id 
+router.get('/rooms/:id', function(req,res, next){
+  const roomId = parseInt(req.params.id)
+  messagesCollection.find({ room_id:roomId}).toArray()
+  .then(results => {
+    res.send(results)
+  })
+  .catch(error => console.error(error));
+})
 
 module.exports = router;
