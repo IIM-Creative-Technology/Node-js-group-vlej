@@ -35,7 +35,7 @@ router.post('/create', function(req, res, next){
 });
 
 /* DELETE room by id */
-router.delete('/delete/:id', function (req, res) {
+router.delete('/:id', function (req, res) {
   const roomId = parseInt(req.params.id)
   roomsCollection.deleteOne({ id: roomId });
   res.json({ success: roomId })
