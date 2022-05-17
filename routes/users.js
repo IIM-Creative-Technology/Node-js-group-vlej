@@ -19,7 +19,8 @@ router.get('/', function(req, res, next) {
 
 /* GET user by id */
 router.get('/:id', function(req, res, next) {
-  usersCollection.find({ id: req.params.id}).toArray()
+  const id = parseInt(req.params.id)
+  usersCollection.find({ id: id}).toArray()
   .then(results => {
     res.send(results)
   })
@@ -27,7 +28,7 @@ router.get('/:id', function(req, res, next) {
 });
 
 /* POST create user */
-router.post('/create', function(req, res, next){
+router.post('/', function(req, res, next){
   const user = new UserModel(req.body);
   usersCollection.insertOne(user)
   .then(result => {
@@ -47,16 +48,17 @@ router.post("/register_login", (req, res, next) => {
 });
 
 /* DELETE user by id */
-router.delete('/delete/:id', function (req, res) {
-  var id = req.params.id;
+router.delete('/:id', function (req, res) {
+  const id = parseInt(req.params.id)
   usersCollection.deleteOne({ id: id });
   res.json({ success: id })
 });
 
 /* PUT update user */
 router.put('/:id', function(req, res, next){
+  const id = parseInt(req.params.id)
   usersCollection.findOneAndUpdate(
-    { id: req.params.id },
+    { id: id },
     {
       $set: {
         name: req.body.name,

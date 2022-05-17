@@ -17,7 +17,8 @@ router.get('/', function(req, res, next) {
 
 /* GET room by id */
 router.get('/:id', function(req, res, next) {
-  roomsCollection.find({ id: req.params.id}).toArray()
+const id = parseInt(req.params.id)
+  roomsCollection.find({ id: id}).toArray()
   .then(results => {
     res.send(results)
   })
@@ -25,7 +26,7 @@ router.get('/:id', function(req, res, next) {
 });
 
 /* POST create room */
-router.post('/create', function(req, res, next){
+router.post('/', function(req, res, next){
   roomsCollection.insertOne(req.body)
   .then(result => {
     res.redirect('/')
@@ -34,10 +35,10 @@ router.post('/create', function(req, res, next){
 });
 
 /* DELETE room by id */
-router.delete('/delete/:id', function (req, res) {
-  var id = req.params.id;
-  roomsCollection.deleteOne({ id: id });
-  res.json({ success: id })
+router.delete('/:id', function (req, res) {
+  const roomId = parseInt(req.params.id)
+  roomsCollection.deleteOne({ id: roomId });
+  res.json({ success: roomId })
 });
 
 
