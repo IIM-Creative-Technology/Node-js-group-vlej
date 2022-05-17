@@ -1,5 +1,7 @@
 var express = require('express');
 var router = express.Router();
+const passport = require("passport");
+const passportFonction = require("../passport/setup");
 const client = require('../database')
 const UserModel = require('../models/users-model')
 
@@ -32,6 +34,16 @@ router.post('/create', function(req, res, next){
     res.json({ success: user.id })
   })
   .catch(error => console.error(error))
+});
+
+// REGISTER & LOGIN
+router.post("/register_login", (req, res, next) => {
+  passport.authenticate("local", function(err, user, info) {
+      if (err) {
+          return res.status(400).json({ errors: err });
+      }
+          passportFonction.register();
+  })(req, res, next);
 });
 
 /* DELETE user by id */
