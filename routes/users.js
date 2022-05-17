@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const client = require('../database')
-
+const UserModel = require('../models/users-model')
 
 const db = client.db('nodejsDatabase');
 const usersCollection =  db.collection("Users");
@@ -26,9 +26,10 @@ router.get('/:id', function(req, res, next) {
 
 /* POST create user */
 router.post('/create', function(req, res, next){
-  usersCollection.insertOne(req.body)
+  const user = new UserModel(req.body);
+  usersCollection.insertOne(user)
   .then(result => {
-    res.redirect('/')
+    res.json({ success: user.id })
   })
   .catch(error => console.error(error))
 });
