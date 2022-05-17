@@ -4,39 +4,39 @@ const client = require('../database')
 
 
 const db = client.db('nodejsDatabase');
-const usersCollection =  db.collection("Users");
+const roomsCollection =  db.collection("Rooms");
 
-/* GET users listing */
+/* GET rooms listing */
 router.get('/', function(req, res, next) {
-  usersCollection.find().toArray()
+  roomsCollection.find().toArray()
   .then(results => {
     res.send(results)
   })
   .catch(error => console.error(error));
 });
 
-/* GET user by id */
+/* GET room by id */
 router.get('/:id', function(req, res, next) {
-  usersCollection.find({ id: req.params.id}).toArray()
+  roomsCollection.find({ id: req.params.id}).toArray()
   .then(results => {
     res.send(results)
   })
   .catch(error => console.error(error));
 });
 
-/* POST create user */
+/* POST create room */
 router.post('/create', function(req, res, next){
-  usersCollection.insertOne(req.body)
+  roomsCollection.insertOne(req.body)
   .then(result => {
     res.redirect('/')
   })
   .catch(error => console.error(error))
 });
 
-/* DELETE user by id */
+/* DELETE room by id */
 router.delete('/delete/:id', function (req, res) {
   var id = req.params.id;
-  usersCollection.deleteOne({ id: id });
+  roomsCollection.deleteOne({ id: id });
   res.json({ success: id })
 });
 
