@@ -29,7 +29,7 @@ const id = parseInt(req.params.id)
 router.post('/', function(req, res, next){
   roomsCollection.insertOne(req.body)
   .then(result => {
-    res.redirect('/')
+    res.json({success:true})
   })
   .catch(error => console.error(error))
 });
