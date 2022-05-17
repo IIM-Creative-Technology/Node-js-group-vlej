@@ -36,7 +36,7 @@ router.post('/create', function(req, res, next){
 });
 
 /* DELETE user by id */
-router.delete('/delete/:id', function (req, res) {
+router.delete('/:id', function (req, res) {
   const id = parseInt(req.params.id)
   usersCollection.deleteOne({ id: id });
   res.json({ success: id })

@@ -35,7 +35,7 @@ router.post('/create', function(req, res, next){
 });
 
 /* DELETE message by id */
-router.delete('/delete/:id', function (req, res) {
+router.delete('/:id', function (req, res) {
   const id = parseInt(req.params.id)
   messagesCollection.deleteOne({ id: id });
   res.json({ success: id })
