@@ -17,7 +17,8 @@ router.get('/', function(req, res, next) {
 
 /* GET message by id */
 router.get('/:id', function(req, res, next) {
-  messagesCollection.find({ id: req.params.id}).toArray()
+  const id = parseInt(req.params.id)
+  messagesCollection.find({ id:id}).toArray()
   .then(results => {
     res.send(results)
   })
@@ -35,10 +36,19 @@ router.post('/create', function(req, res, next){
 
 /* DELETE message by id */
 router.delete('/delete/:id', function (req, res) {
-  var id = req.params.id;
+  const id = parseInt(req.params.id)
   messagesCollection.deleteOne({ id: id });
   res.json({ success: id })
 });
 
+//find messages by room id 
+router.get('/rooms/:id', function(req,res, next){
+  const roomId = parseInt(req.params.id)
+  messagesCollection.find({ room_id:roomId}).toArray()
+  .then(results => {
+    res.send(results)
+  })
+  .catch(error => console.error(error));
+})
 
 module.exports = router;

@@ -17,7 +17,8 @@ router.get('/', function(req, res, next) {
 
 /* GET user by id */
 router.get('/:id', function(req, res, next) {
-  usersCollection.find({ id: req.params.id}).toArray()
+  const id = parseInt(req.params.id)
+  usersCollection.find({ id: id}).toArray()
   .then(results => {
     res.send(results)
   })
@@ -36,15 +37,16 @@ router.post('/create', function(req, res, next){
 
 /* DELETE user by id */
 router.delete('/delete/:id', function (req, res) {
-  var id = req.params.id;
+  const id = parseInt(req.params.id)
   usersCollection.deleteOne({ id: id });
   res.json({ success: id })
 });
 
 /* PUT update user */
 router.put('/:id', function(req, res, next){
+  const id = parseInt(req.params.id)
   usersCollection.findOneAndUpdate(
-    { id: req.params.id },
+    { id: id },
     {
       $set: {
         name: req.body.name,
