@@ -5,10 +5,9 @@ const UserModel = require('../models/users-model')
 
 const db = client.db('nodejsDatabase');
 const usersCollection =  db.collection("Users");
-/* GET users listing. */
 
+/* GET users listing */
 router.get('/', function(req, res, next) {
-  // Index
   usersCollection.find().toArray()
   .then(results => {
     res.send(results)
@@ -16,6 +15,7 @@ router.get('/', function(req, res, next) {
   .catch(error => console.error(error));
 });
 
+/* GET user by id */
 router.get('/:id', function(req, res, next) {
   usersCollection.find({ id: req.params.id}).toArray()
   .then(results => {
@@ -24,6 +24,7 @@ router.get('/:id', function(req, res, next) {
   .catch(error => console.error(error));
 });
 
+/* POST create user */
 router.post('/create', function(req, res, next){
   const user = new UserModel(req.body);
   usersCollection.insertOne(user)
@@ -33,11 +34,14 @@ router.post('/create', function(req, res, next){
   .catch(error => console.error(error))
 });
 
+/* DELETE user by id */
 router.delete('/delete/:id', function (req, res) {
   var id = req.params.id;
   usersCollection.deleteOne({ id: id });
   res.json({ success: id })
 });
+
+
 module.exports = router;
 
 // Update One user
