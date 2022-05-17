@@ -27,11 +27,13 @@ const id = parseInt(req.params.id)
 
 /* POST create room */
 router.post('/', function(req, res, next){
+  console.log(req.body);
   roomsCollection.insertOne(req.body)
   .then(result => {
     res.redirect('/')
   })
   .catch(error => console.error(error))
+  
 });
 
 /* DELETE room by id */
