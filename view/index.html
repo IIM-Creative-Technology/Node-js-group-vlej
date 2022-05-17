@@ -5,7 +5,11 @@
     </head>
     <body>
         <div class="container">
-            <button id="create"></button>
+            <button id="create" onclick="create()">create</button>
+            <form id="addroom">
+                <input type="text" placeholder="room id">
+                <button type="submit">join</button>
+            </form>
             <button id="ajouter"></button>
             <ul id="roomlist">
                 <li>liste de conversation:</li>
@@ -16,4 +20,29 @@
         
         
     </body>
+    <script>
+        async function getroom(){
+            let url = 'http://127.0.0.1:3000/rooms';
+            let response = await fetch(url);
+            let rooms = await response.json();
+
+            let list = document.getElementById("roomlist")
+            console.log(rooms);
+            for( const room of rooms){
+                console.log(room);
+                list.innerHTML += "<li>"+room.name+"</li>";
+            }
+        }
+        getroom()
+        async function create(){
+            let url = 'http://127.0.0.1:3000/rooms';
+            let response = await fetch(url,{
+                method: 'POST'
+                ,body: JSON.stringify({user_id:[2,4]})
+            });
+            const content = await response.json();
+            console.log(content);
+        }
+        
+    </script>
 </html>
