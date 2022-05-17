@@ -26,7 +26,7 @@ router.get('/:id', function(req, res, next) {
 });
 
 /* POST create user */
-router.post('/create', function(req, res, next){
+router.post('/', function(req, res, next){
   const user = new UserModel(req.body);
   usersCollection.insertOne(user)
   .then(result => {

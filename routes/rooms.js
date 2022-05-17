@@ -26,7 +26,7 @@ const id = parseInt(req.params.id)
 });
 
 /* POST create room */
-router.post('/create', function(req, res, next){
+router.post('/', function(req, res, next){
   roomsCollection.insertOne(req.body)
   .then(result => {
     res.redirect('/')

@@ -26,7 +26,7 @@ router.get('/:id', function(req, res, next) {
 });
 
 /* POST create message */
-router.post('/create', function(req, res, next){
+router.post('/', function(req, res, next){
   messagesCollection.insertOne(req.body)
   .then(result => {
     res.redirect('/')
