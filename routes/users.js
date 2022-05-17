@@ -42,3 +42,27 @@ router.delete('/delete/:id', function (req, res) {
 
 
 module.exports = router;
+
+// Update One user
+router.put('/:id', function(req, res, next){
+  usersCollection.findOneAndUpdate(
+    { id: req.params.id },
+    {
+      $set: {
+        name: req.body.name,
+        email: req.body.email
+      }
+    },
+    {
+      upsert: false
+    }
+  )
+    .then(result => {
+      usersCollection.find({ id: result.value.id}).toArray()
+        .then(results => {
+          res.send(results)
+        })
+        .catch(error => console.error(error));
+    })
+    .catch(error => console.error(error))
+})
