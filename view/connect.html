@@ -5,15 +5,38 @@
     </head>
     <body>
         <div class="container">
-            <form id="connectionform">
-                <input id="name" type="text" placeholder="pseudo">
+            <form id="connectionForm">
+                <input id="email" type="email" placeholder="email">
                 <input id="password" type="password" placeholder="password">
-                <button type="submit"></button>
+                <button type="submit">CEST TIPAR</button>
             </form>
         </div>
         
-        
-        
-        
+        <script>
+            document.getElementById("connectionForm").addEventListener("submit", (e) => submitForm(e))
+
+            async function submitForm(e){
+                e.preventDefault();
+
+                let emailUser = document.getElementById("email").value;
+                let passwordUser = document.getElementById("password").value;
+                let url = 'http://127.0.0.1:3000/users/login';
+
+                let req = await fetch(url,{
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        email: emailUser,
+                        password: passwordUser
+                    })
+                });
+                if(req.status == 200){
+                    const res = await req.json();
+                    localStorage.setItem('userToken', res.token);
+                } else {
+                    console.log(req);
+                }
+            }
+        </script>
     </body>
 </html>

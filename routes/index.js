@@ -6,6 +6,8 @@ const path = require('path');
 router.get('/',function(req,res){
   res.sendFile(path.join(__dirname+'/../view/index.html'));
 });
+
+// Chatroom
 router.get('/chatroom/:id',function(req,res){
   res.io.on('connection', (socket) => {
     console.log('a user connected');
@@ -19,6 +21,11 @@ router.get('/chatroom/:id',function(req,res){
   });
 
   res.sendFile(path.join(__dirname+'/../view/chatroom.html'));
+});
+
+// Connexion
+router.get('/connexion',function(req,res){
+  res.sendFile(path.join(__dirname+'/../view/connect.html'));
 });
 
 module.exports = router;
