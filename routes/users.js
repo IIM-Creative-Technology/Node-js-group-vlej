@@ -1,11 +1,7 @@
 var express = require('express');
 var router = express.Router();
-var crypto = require('crypto');
-const passport = require("passport");
-const passportFonction = require("../passport/setup");
 const client = require('../database')
 const User = require('../models/users-model');
-const { json } = require('express/lib/response');
 
 const db = client.db('nodejsDatabase');
 const usersCollection =  db.collection("Users");
@@ -31,11 +27,9 @@ router.get('/:id', function(req, res, next) {
 
 /* POST register/create new user with hashed password */
 router.post("/register", (req, res, next) => {
-  var salt = crypto.randomBytes(16);
-  crypto.pbkdf2(req.body.password, salt, 310000, 32, 'sha256', function(err, hashedPassword) {
-    const newUser = new User({ name: req.body.name, email: req.body.email, password: hashedPassword });
-    usersCollection.insertOne(newUser)
-  });
+  const hashedPassword = bcrypt.hashSync(req.body.password, 10);
+  const newUser = new User({ name: req.body.name, email: req.body.email, password: hashedPassword });
+  usersCollection.insertOne(newUser);
   return res.json({success: `Le compte ${req.body.email} a bien été créé`})
 });
 
