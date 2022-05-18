@@ -6,10 +6,10 @@
     <body>
         <div class="container">
             <button id="create" onclick="create()">create</button>
-            <form id="addroom">
-                <input type="text" placeholder="room id">
-                <button type="submit">join</button>
-            </form>
+
+            <input type="number" placeholder="room id">
+            <button onclick=joinRoom() type="submit">join</button>
+
             <ul id="roomlist">
                 <li>liste de conversation:</li>
             </ul>
@@ -21,23 +21,53 @@
     </body>
     <script>
         async function getroom(){
+            let rooms = []
             let url = 'http://127.0.0.1:3000/rooms';
             let response = await fetch(url);
-            let rooms = await response.json();
+            rooms = await response.json();
             let list = document.getElementById("roomlist")
             for( const room of rooms){
-                console.log(room);
-                list.innerHTML += "<li>"+room.id+"<button><a href='chatroom/"+room.id+"'>go in</a></button></li>";
+                list.innerHTML += 
+                `<li>${room.id}
+                    <button>
+                        <a href='chatroom/${room.id}'>go in</a>
+                    </button>
+                    <button onclick="deleteRoom(${room.id})">delete</button>
+                </li>`;
             }
         }
         getroom();
         async function create(){
             const url = 'http://127.0.0.1:3000/rooms';
-             await fetch(url,{
+            await fetch(url,{
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ user_id: 'teest'})
+                body: JSON.stringify({ user_id: []})
             })
+        }
+        async function deleteRoom(id){
+            const url = `http://127.0.0.1:3000/rooms/${id}`;
+            await fetch(url,{
+                method: 'DELETE',
+            })
+        }
+        async function joinRoom(){
+            const val = document.querySelector('input').value;
+            const url = `http://127.0.0.1:3000/rooms/${val}`;
+            const response = await fetch(url,{
+                method: 'GET',
+            });
+            const room = await response.json();
+            const userId =  Math.floor(Math.random() * 5)
+            if(!room[0].user_id.includes(userId)){
+                await fetch(url,{
+                method: 'PUT',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ user_id: userId})
+            })
+            } else{
+                console.log("error", userId, room[0].user_id )
+            }
         }
     </script>
 </html>
