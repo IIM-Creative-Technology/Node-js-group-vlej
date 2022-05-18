@@ -27,7 +27,6 @@ const id = parseInt(req.params.id)
 
 /* POST create room */
 router.post('/', function(req, res, next){
-  console.log(req.body);
   roomsCollection.insertOne(req.body)
   .then(result => {
     res.json({success:true})
@@ -42,6 +41,5 @@ router.delete('/:id', function (req, res) {
   roomsCollection.deleteOne({ id: roomId });
   res.json({ success: roomId })
 });
-
 
 module.exports = router;
