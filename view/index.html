@@ -10,7 +10,6 @@
                 <input type="text" placeholder="room id">
                 <button type="submit">join</button>
             </form>
-            <button id="ajouter"></button>
             <ul id="roomlist">
                 <li>liste de conversation:</li>
             </ul>
@@ -27,7 +26,8 @@
             let rooms = await response.json();
             let list = document.getElementById("roomlist")
             for( const room of rooms){
-                list.innerHTML += "<li>"+room.id+"</li>";
+                console.log(room);
+                list.innerHTML += "<li>"+room.id+"<button><a href='chatroom/"+room.id+"'>go in</a></button></li>";
             }
         }
         getroom();
