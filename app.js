@@ -15,7 +15,7 @@ var roomsRouter = require('./routes/rooms');
 var messagesRouter = require('./routes/messages');
 const { LoggerLevel } = require('mongodb');
 const bodyParser = require('body-parser');
-
+var cors = require('cors')
 // INITIALISATION
 var app = express();
 
@@ -28,7 +28,7 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 app.use(express.urlencoded({ extended: false }));
-
+app.use(cors())
 // ROUTES
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
