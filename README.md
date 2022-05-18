@@ -1,11 +1,11 @@
 # Node-js-group-vlej
 
-install
+#install
 
 npm i 
 
 npm install -g nodemon
 
-launch the project
+#launch the project
 
-nodem
+nodemon
