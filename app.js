@@ -18,6 +18,9 @@ var cors = require('cors')
 const http = require('http');
 const socketio = require("socket.io");
 
+var swaggerJsdoc = require("swagger-jsdoc");
+var swaggerUi = require("swagger-ui-express");
+
 // INITIALISATION
 var app = express();
 const server = http.createServer(app);
@@ -44,6 +47,32 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/rooms', roomsRouter);
 app.use('/messages', messagesRouter);
+
+
+const options = {
+  definition: {
+    openapi: "3.0.0",
+    info: {
+      title: "API Documentation",
+      version: "0.1.0",
+      description:
+        "This is the documentation of the API of the group vlej",
+    },
+    servers: [
+      {
+        url: "http://localhost:3000",
+      },
+    ],
+  },
+  apis: ["./routes/messages.js","./routes/rooms.js","./routes/users.js"],
+};
+
+const specs = swaggerJsdoc(options);
+app.use(
+  "/api-docs",
+  swaggerUi.serve,
+  swaggerUi.setup(specs)
+);
 
 // SESSION (auth)
 app.use(
