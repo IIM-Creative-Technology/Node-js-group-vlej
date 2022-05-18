@@ -29,9 +29,10 @@ const id = parseInt(req.params.id)
 router.post('/', function(req, res, next){
   roomsCollection.insertOne(req.body)
   .then(result => {
-    res.redirect('/')
+    res.json({success:true})
   })
   .catch(error => console.error(error))
+
 });
 
 /* DELETE room by id */
@@ -41,5 +42,12 @@ router.delete('/:id', function (req, res) {
   res.json({ success: roomId })
 });
 
-
+/*Insert user id in room */
+router.put('/:id', function(req,res){
+  const roomId = parseInt(req.params.id)
+  roomsCollection.findOneAndUpdate(
+    { id: roomId },
+    { $push: { user_id: req.body.user_id } }
+  )
+})
 module.exports = router;

@@ -14,9 +14,20 @@ var roomsRouter = require('./routes/rooms');
 var messagesRouter = require('./routes/messages');
 const { LoggerLevel } = require('mongodb');
 const bodyParser = require('body-parser');
+var cors = require('cors')
+const http = require('http');
+const socketio = require("socket.io");
 
 // INITIALISATION
 var app = express();
+const server = http.createServer(app);
+const io =  socketio(server);
+
+//socket
+app.use(function(req, res, next){
+  res.io = io;
+  next();
+});
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -27,7 +38,7 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 app.use(express.urlencoded({ extended: false }));
-
+app.use(cors())
 // ROUTES
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
@@ -60,5 +71,9 @@ app.use(function(err, req, res, next) {
   res.json({"error":err});
 });
 
-module.exports = app;
+
+
+
+
+module.exports = {app: app, server:server};
 
