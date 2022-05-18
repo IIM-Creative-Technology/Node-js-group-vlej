@@ -21,22 +21,34 @@
     </body>
     <script>
         async function getroom(){
+            let rooms = []
             let url = 'http://127.0.0.1:3000/rooms';
             let response = await fetch(url);
-            let rooms = await response.json();
+            rooms = await response.json();
             let list = document.getElementById("roomlist")
             for( const room of rooms){
-                console.log(room);
-                list.innerHTML += "<li>"+room.id+"<button><a href='chatroom/"+room.id+"'>go in</a></button></li>";
+                list.innerHTML += 
+                `<li>${room.id}
+                    <button>
+                        <a href='chatroom/${room.id}'>go in</a>
+                    </button>
+                    <button onclick="deleteRoom(${room.id})">delete</button>
+                </li>`;
             }
         }
         getroom();
         async function create(){
             const url = 'http://127.0.0.1:3000/rooms';
-             await fetch(url,{
+            await fetch(url,{
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ user_id: 'teest'})
+                body: JSON.stringify({ user_id: []})
+            })
+        }
+        async function deleteRoom(id){
+            const url = `http://127.0.0.1:3000/rooms/${id}`;
+            await fetch(url,{
+                method: 'DELETE',
             })
         }
     </script>
