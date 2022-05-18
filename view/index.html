@@ -10,7 +10,6 @@
                 <input type="text" placeholder="room id">
                 <button type="submit">join</button>
             </form>
-            <button id="ajouter"></button>
             <ul id="roomlist">
                 <li>liste de conversation:</li>
             </ul>
@@ -30,7 +29,7 @@
             console.log(rooms);
             for( const room of rooms){
                 console.log(room);
-                list.innerHTML += "<li>"+room.id+"</li>";
+                list.innerHTML += "<li>"+room.id+"<button><a href='chatroom/"+room.id+"'>go in</a></button></li>";
             }
         }
         getroom();

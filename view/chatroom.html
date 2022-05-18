@@ -32,7 +32,6 @@
         
     </body>
     <script src="/socket.io/socket.io.js"></script>
-    <script src="socket.js"></script>
     <script>
         var socket = io();
         
@@ -47,7 +46,6 @@
         }
 
         socket.on('message', (msg) => {
-           
             messagearea.innerHTML += "<p>"+msg+"</p>"
         });
     </script>
