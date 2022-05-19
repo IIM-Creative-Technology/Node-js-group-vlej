@@ -1,6 +1,6 @@
 <template>
    <div>
-        <div class="container">
+        <div class="container formType">
                 <input id="email" type="email" v-model="email" placeholder="email">
                 <input id="password" type="password" v-model="password" placeholder="password">
                 <button @click="submitForm()">CEST TIPAR</button>

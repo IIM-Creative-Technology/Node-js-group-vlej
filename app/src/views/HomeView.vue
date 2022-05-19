@@ -1,7 +1,7 @@
 <template>
   <div>
       <button id="create" @click="create()">create</button>
-      <div style="margin-top:50px">
+      <div class="formType" style="margin-top:50px">
         <input type="number" placeholder="room id">
         <button @click="joinRoom()" type="submit">join</button>
       </div>

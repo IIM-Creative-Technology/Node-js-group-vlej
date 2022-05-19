@@ -1,0 +1,35 @@
+$primary-color: #16a085;
+
+.formType{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  input{
+    border-radius: 0;
+    border: 2px solid $primary-color;
+    padding: 5px;
+    width: 200px;
+    margin: 10px 0;
+    color: #000;
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    &::placeholder{
+      color: #000;
+      font-family: Avenir, Helvetica, Arial, sans-serif;
+    }
+    &:focus{
+      outline: none;
+    }
+  }
+  
+  button{
+    background: $primary-color;
+    border-radius: 0;
+    width: 200px;
+    color: #FFF;
+    text-transform: uppercase;
+    border: none;
+    padding: 10px;
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+  }
+}
