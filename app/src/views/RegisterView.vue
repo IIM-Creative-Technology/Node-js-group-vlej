@@ -21,7 +21,7 @@ export default {
     },
 methods: {
      async submitForm(){
-        let url = 'http://127.0.0.1:3000/users/register';
+        let url = 'https://celebrated-trifle-667406.netlify.app/users/register';
         let req = await fetch(url,{
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
