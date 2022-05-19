@@ -11,6 +11,7 @@
                 <button type="submit">CEST TIPAR</button>
             </form>
         </div>
+        <p id="error"></p>
         
         <script>
             document.getElementById("connectionForm").addEventListener("submit", (e) => submitForm(e))
@@ -33,8 +34,10 @@
                 if(req.status == 200){
                     const res = await req.json();
                     localStorage.setItem('userToken', res.token);
+                    document.getElementById("error").innerHTML="Vous êtes connecté ! Vous pouvez maintenant <a href=\"/\">accéder aux rooms</a>"
                 } else {
-                    console.log(req);
+                    const res = await req.json();
+                    document.getElementById("error").textContent=res.error
                 }
             }
         </script>
