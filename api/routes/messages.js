@@ -27,9 +27,10 @@ router.get('/:id', function(req, res, next) {
 
 /* POST create message */
 router.post('/', function(req, res, next){
+  console.log(req.body)
   messagesCollection.insertOne(req.body)
   .then(result => {
-    res.redirect('/')
+    res.json({success:true})
   })
   .catch(error => console.error(error))
 });
@@ -43,8 +44,8 @@ router.delete('/:id', function (req, res) {
 
 //find messages by room id 
 router.get('/rooms/:id', function(req,res, next){
-  const roomId = parseInt(req.params.id)
-  messagesCollection.find({ room_id:roomId}).toArray()
+  const roomId = req.params.id;
+  messagesCollection.find({idroom: roomId}).toArray()
   .then(results => {
     res.send(results)
   })
