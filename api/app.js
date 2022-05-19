@@ -24,8 +24,11 @@ var swaggerUi = require("swagger-ui-express");
 // INITIALISATION
 var app = express();
 const server = http.createServer(app);
-const io =  socketio(server);
-
+const io =  socketio(server,{
+  cors: {
+    origin: "http://localhost:8080"
+  }
+});
 //socket
 app.use(function(req, res, next){
   res.io = io;
@@ -60,7 +63,7 @@ const options = {
     },
     servers: [
       {
-        url: "http://localhost:3000",
+        url: "http://127.0.0.1:3000",
       },
     ],
   },

@@ -16,11 +16,9 @@ router.get('/chatroom/:id',function(req,res){
         console.log('user disconnected');
     });
     socket.on('message', (data) => {
-        console.log(data.idroom)
-        res.io.emit('message'+data.idroom,{id:socket.id, msg:data.msg} );
+        res.io.emit('message',{id:socket.id, msg:data.msg} );
       });
-  });
-
+  })
   res.sendFile(path.join(__dirname+'/../view/chatroom.html'));
 });
 
