@@ -383,6 +383,33 @@
         "Rooms": {
             "type": "array",
             "$ref": "#/definitions/Room"
+        },
+        "Message": {
+            "required": [
+                "_id",
+                "user_id",
+                "message",
+                "idroom"
+            ],
+            "properties": {
+                "_id": {
+                    "type": "string",
+                    "uniqueItems": true
+                },
+                "user_id": {
+                    "type": "integer"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "idroom": {
+                    "type": "integer"
+                }
+            }
+        },
+        "Messages": {
+            "type": "array",
+            "$ref": "#/definitions/Message"
         }
     }
 }
