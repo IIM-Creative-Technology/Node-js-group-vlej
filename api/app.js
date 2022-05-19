@@ -22,8 +22,11 @@ swaggerDocument = require('./swagger.json');
 // INITIALISATION
 var app = express();
 const server = http.createServer(app);
-const io =  socketio(server);
-
+const io =  socketio(server,{
+  cors: {
+    origin: "http://localhost:8080"
+  }
+});
 //socket
 app.use(function(req, res, next){
   res.io = io;

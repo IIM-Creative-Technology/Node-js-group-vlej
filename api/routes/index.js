@@ -11,16 +11,13 @@ router.get('/',function(req,res){
 router.get('/chatroom/:id',function(req,res){
   res.io.on('connection', (socket) => {
     socket.removeAllListeners();
-    console.log('a user connected');
     socket.on('disconnect', () => {
         console.log('user disconnected');
     });
     socket.on('message', (data) => {
-        console.log(data.idroom)
-        res.io.emit('message'+data.idroom,{id:socket.id, msg:data.msg} );
+        res.io.emit('message'+req.params.id,{id:socket.id, msg:data.msg} );
       });
-  });
-
+  })
   res.sendFile(path.join(__dirname+'/../view/chatroom.html'));
 });
 
