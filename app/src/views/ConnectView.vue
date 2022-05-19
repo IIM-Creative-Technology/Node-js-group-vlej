@@ -20,7 +20,7 @@ export default {
 methods: {
      async submitForm(){
             console.log('submitForm')
-                let url = 'http://127.0.0.1:3000/users/login';
+                let url = 'https://nodejsgroupvlej.azurewebsites.net/users/login';
                 let req = await fetch(url,{
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
