@@ -31,14 +31,14 @@ export default {
   },
   methods: {
     async getroom(){
-      let url = 'https://nodejsgroupvlej.azurewebsites.net/rooms';
+      let url = 'http://127.0.0.1:3000/rooms';
       const response = await fetch(url);
       const responseJsoned = await response.json();
       console.log(responseJsoned)
       this.$set(this.$data, 'rooms', responseJsoned)
       },
         async create(){
-            const url = 'https://nodejsgroupvlej.azurewebsites.net/rooms';
+            const url = 'http://127.0.0.1:3000/rooms';
             await fetch(url,{
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
@@ -47,7 +47,7 @@ export default {
             this.getroom();
         },
         async deleteRoom(id){
-            const url = `https://nodejsgroupvlej.azurewebsites.net/rooms/${id}`;
+            const url = `http://127.0.0.1:3000/rooms/${id}`;
             await fetch(url,{
                 method: 'DELETE',
             })
@@ -55,7 +55,7 @@ export default {
         },
         async joinRoom (){
           const val = document.querySelector('input').value;
-          const url = `https://nodejsgroupvlej.azurewebsites.net/rooms/${val}`;
+          const url = `http://127.0.0.1:3000/rooms/${val}`;
           const response = await fetch(url,{
               method: 'GET',
           });
