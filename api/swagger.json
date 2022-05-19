@@ -206,6 +206,123 @@
                     }
                 }
             }
+        },
+        "/rooms": {
+            "get": {
+                "tags": [
+                    "Rooms"
+                ],
+                "summary": "Get all rooms",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Rooms"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Rooms"
+                ],
+                "summary": "Create a room",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "body",
+                        "description": "Id of the room",
+                        "type": "integer"
+                    },
+                    {
+                        "name": "user_id",
+                        "in": "body",
+                        "description": "Array of Ids of the users of the room",
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "success": {
+                                    "type": "boolean",
+                                    "description": "Returns 'True' if the room is created"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/rooms/{id}": {
+            "get": {
+                "tags": [
+                    "Rooms"
+                ],
+                "summary": "Get the info of a room",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Room"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Rooms"
+                ],
+                "summary": "Put a user a room",
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "body",
+                        "description": "Id of the user",
+                        "type": "integer"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Rooms"
+                ],
+                "summary": "Delete a room",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "success": {
+                                    "type": "integer",
+                                    "description": "The id of the deleted room"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -240,6 +357,32 @@
         "Users": {
             "type": "array",
             "$ref": "#/definitions/User"
+        },
+        "Room": {
+            "required": [
+                "id",
+                "user_id"
+            ],
+            "properties": {
+                "_id": {
+                    "type": "string",
+                    "uniqueItems": true
+                },
+                "id": {
+                    "type": "integer",
+                    "uniqueItems": true
+                },
+                "user_id": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                }
+            }
+        },
+        "Rooms": {
+            "type": "array",
+            "$ref": "#/definitions/Room"
         }
     }
 }
