@@ -7,7 +7,6 @@ var logger = require('morgan');
 const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
 const mongoose = require("mongoose");
-
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var roomsRouter = require('./routes/rooms');
@@ -17,9 +16,8 @@ const bodyParser = require('body-parser');
 var cors = require('cors')
 const http = require('http');
 const socketio = require("socket.io");
-
-var swaggerJsdoc = require("swagger-jsdoc");
 var swaggerUi = require("swagger-ui-express");
+swaggerDocument = require('./swagger.json');
 
 // INITIALISATION
 var app = express();
@@ -42,36 +40,18 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(express.urlencoded({ extended: false }));
 app.use(cors())
+
 // ROUTES
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/rooms', roomsRouter);
 app.use('/messages', messagesRouter);
 
-
-const options = {
-  definition: {
-    openapi: "3.0.0",
-    info: {
-      title: "API Documentation",
-      version: "0.1.0",
-      description:
-        "This is the documentation of the API of the group vlej",
-    },
-    servers: [
-      {
-        url: "http://localhost:3000",
-      },
-    ],
-  },
-  apis: ["./routes/messages.js","./routes/rooms.js","./routes/users.js"],
-};
-
-const specs = swaggerJsdoc(options);
+// DOC SWAGGER
 app.use(
   "/api-docs",
   swaggerUi.serve,
-  swaggerUi.setup(specs)
+  swaggerUi.setup(swaggerDocument)
 );
 
 // SESSION (auth)
@@ -100,9 +80,4 @@ app.use(function(err, req, res, next) {
   res.json({"error":err});
 });
 
-
-
-
-
 module.exports = {app: app, server:server};
-
