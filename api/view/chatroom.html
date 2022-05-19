@@ -39,13 +39,35 @@
         var messagearea = document.getElementById('chat');
         var id= window.location.href.split('/').at(-1)
         console.log(id);
+        getmessage(id);
         function sendmessage(){
             if(input.value){
                 socket.emit('message',{idroom:id,msg:input.value});
+                addmessage(input.value,socket.id,id);
                 input.value= "";
             }
+            
         }
 
+        async function addmessage(message,user_id,idroom){
+            const url = 'http://127.0.0.1:3000/messages';
+            await fetch(url,{
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+              
+                body: JSON.stringify({ user_id: user_id ,message: message,idroom:idroom})
+            });
+        }
+        async function getmessage(id){
+            let messages = []
+            let url = 'http://127.0.0.1:3000/messages/rooms/'+id;
+            let response = await fetch(url);
+            messages = await response.json();
+            for( const message of messages){
+                messagearea.innerHTML += 
+                "<p>"+message.user_id+" : "+message.message+"</p>";
+            }
+        }
         socket.on('message'+id, (data) => {
             messagearea.innerHTML += "<p>"+data.id+" : "+data.msg+"</p>"
         });
