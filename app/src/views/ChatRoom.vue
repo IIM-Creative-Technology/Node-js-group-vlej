@@ -39,12 +39,12 @@ export default {
       this.messages.push(data)
       });
       const id = this.$route.params.id
-      const url = `http://127.0.0.1:3000/chatroom/${id}`;
+      const url = `https://celebrated-trifle-667406.netlify.app/chatroom/${id}`;
       await fetch(url)
   },
   async mounted() {
     const id = this.$route.params.id
-    let url = 'http://127.0.0.1:3000/messages/rooms/'+id;
+    let url = 'https://celebrated-trifle-667406.netlify.app/messages/rooms/'+id;
     let response = await fetch(url);
     const messages = await response.json();
     this.$set(this.$data, "messages"  ,messages)
@@ -54,7 +54,7 @@ export default {
         this.socket.emit('message', {
             message: this.msgToSend
         });
-        const url = 'http://127.0.0.1:3000/messages';
+        const url = 'https://celebrated-trifle-667406.netlify.app/messages';
           await fetch(url,{
               method: 'POST',
               headers: {'Content-Type': 'application/json'},
