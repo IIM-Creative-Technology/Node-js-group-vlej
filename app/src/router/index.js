@@ -4,6 +4,7 @@ import HomeView from '../views/HomeView.vue'
 import AboutView from '../views/AboutView.vue'
 import ConnectView from '../views/ConnectView.vue'
 import RegisterView from '../views/RegisterView.vue'
+import ChatRoomView from "../views/ChatRoom.vue"
 
 Vue.use(VueRouter)
 
@@ -27,6 +28,11 @@ const routes = [
     path:'/register',
     name:"register",
     component: RegisterView
+  },
+  {
+    path:'/chatroom/:id',
+    name:"chatroom",
+    component: ChatRoomView
   }
 ]
 

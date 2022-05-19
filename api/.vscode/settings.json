@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/81be972f-20c7-4979-8e3e-0360c293fdcf/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/nodejsGroupVlej",
+    "appService.deploySubpath": "."
+}

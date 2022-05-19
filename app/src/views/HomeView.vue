@@ -10,6 +10,7 @@
           <div v-for="room in rooms"  :key="room.id">
             Rooom : {{room.id}} / {{room.user_id}}
             <button @click="deleteRoom(room.id)">delete</button>
+            <router-link :to="{ path: `/chatroom/${room.id}`}" >Chat room</router-link>
           </div>
       </ul>
     </div>
