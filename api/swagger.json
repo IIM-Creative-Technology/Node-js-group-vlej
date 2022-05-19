@@ -323,6 +323,110 @@
                     }
                 }
             }
+        },
+        "/messages": {
+            "get": {
+                "tags": [
+                    "Messages"
+                ],
+                "summary": "Get all messages",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Messages"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Messages"
+                ],
+                "summary": "Send a message",
+                "parameters": [
+                    {
+                        "name": "message",
+                        "in": "body",
+                        "description": "The message you want to send",
+                        "schema": {
+                            "$ref": "#/definitions/MessageSent"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "success": {
+                                    "type": "boolean",
+                                    "description": "Returns 'True' if the room is created"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/messages/{id}": {
+            "get": {
+                "tags": [
+                    "Messages"
+                ],
+                "summary": "Get a message",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Message"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Messages"
+                ],
+                "summary": "Delete a message",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "success": {
+                                    "type": "integer",
+                                    "description": "The id of the deleted room"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/messages/rooms/{id}": {
+            "get": {
+                "tags": [
+                    "Messages"
+                ],
+                "summary": "Get all messages from a room",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Messages"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -410,6 +514,24 @@
         "Messages": {
             "type": "array",
             "$ref": "#/definitions/Message"
+        },
+        "MessageSent": {
+            "required": [
+                "user_id",
+                "message",
+                "idroom"
+            ],
+            "properties": {
+                "user_id": {
+                    "type": "integer"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "idroom": {
+                    "type": "integer"
+                }
+            }
         }
     }
 }
