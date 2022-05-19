@@ -11,12 +11,11 @@ router.get('/',function(req,res){
 router.get('/chatroom/:id',function(req,res){
   res.io.on('connection', (socket) => {
     socket.removeAllListeners();
-    console.log('a user connected');
     socket.on('disconnect', () => {
         console.log('user disconnected');
     });
     socket.on('message', (data) => {
-        res.io.emit('message',{id:socket.id, msg:data.msg} );
+        res.io.emit('message'+req.params.id,{id:socket.id, msg:data.msg} );
       });
   })
   res.sendFile(path.join(__dirname+'/../view/chatroom.html'));

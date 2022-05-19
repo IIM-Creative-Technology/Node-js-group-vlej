@@ -6,7 +6,7 @@
               <div class="col-9">
                   <div id="chat" style="width:100%; border: black solid 1px; height: 500px;overflow: auto;">
                   <div v-for="message in messages"  :key="message.msg">
-                    {{message}}
+                   {{message.id}} {{message.msg}}
                   </div>
                   </div>
                   <div class="row" style="margin-top: 20px">
@@ -33,9 +33,8 @@ export default {
     }
   },
   async created() {
-    this.socket.on('message', (data) => {
+    this.socket.on('message'+this.$route.params.id, (data) => {
            this.messages.push(data)
-
       });
       const id = this.$route.params.id
       const url = `http://127.0.0.1:3000/chatroom/${id}`;
@@ -44,7 +43,7 @@ export default {
   methods: {
     sendMessage() {
         this.socket.emit('message', {
-            message: 'message'
+            msg: 'message'
         });
     }
   },
